@@ -1,0 +1,66 @@
+######################################################################################################################
+Instructions for how to flash an Octopus with a STM32F446
+######################################################################################################################
+
+//Copy-Paste//
+cd ~/klipper
+make clean
+make menuconfig
+//End//
+
+In the menu structure there are a number of items to be selected.
+  Select “Enable extra low-level configuration options”
+  Set the micro-controller architecture is set to STMicroelectronics STM32
+  Set the Processor model to STM32F446
+  Set the Bootloader offset to 32KiB bootloader
+  Set the Clock Reference to 12 MHz crystal
+  Set the Communication interface to USB (on PA11/PA12) (note: see BigTreeTech documentation if you intend to use UART rather than USB)
+Exit and save config
+
+*DFU Firmware Install Method*
+
+Install the BOOT0 jumper
+Press the reset button next to the USB connector
+Find the ID of the dfu device with lsusb. The device is typically named STM Device in DFU mode.
+If you do not see a DFU device in the list, press the reset button next to the USB connector and run lsusb again.
+From your ssh session, run
+
+//Copy-Paste//
+make
+make flash FLASH_DEVICE=0483:df11
+//End//
+
+You can confirm that the flash was successful by running ls /dev/serial/by-id. If the flash was successful, this should now show a klipper device
+
+*SD Card Method*
+
+You should see "Serving HTTP on 0.0.0.0 port 8081 (http://0.0.0.0:8081/) ..."
+If not, change the port from 8081 and try again.  Port in the next step will need to match.
+Go to http://raspberrypi:8081/ in a web browser
+Download klipper.bin and rename to firmware.bin
+Click back on your SSH session and press CTRL-C to close your web server.
+You should see "Keyboard interrupt received, exiting"
+Move firmware.bin to a properly formatted SD card.
+Put SD card into the machine and power cycle it.
+Verify in the machine tab that the version has updated and matches the host version.
+
+
+######################################################################################################################
+Instructions for how to flash the host MCU
+######################################################################################################################
+
+//Copy-Paste//
+cd klipper
+make menuconfig
+//End//
+
+Set menu to these settings
+  Micro-contrller Architecture (Linux process)
+Exit and save config
+
+//Copy-Paste//
+make clean
+sudo service klipper stop
+make flash
+sudo service klipper start
+//End//

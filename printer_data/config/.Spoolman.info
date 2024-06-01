@@ -1,0 +1,26 @@
+#Spoolman systemd service has been installed and Spoolman is now starting.
+#Spoolman will soon be reachable at http://192.168.105.2:7912
+#Please note that the displayed IP address may be incorrect for your setup. If needed, replace it manually with the correct IP.
+#You can start/restart/stop the service by running e.g. 'sudo systemctl stop Spoolman'
+#You can disable the service from starting automatically by running 'sudo systemctl disable Spoolman'
+#You can view the Spoolman logs by running 'sudo journalctl -u Spoolman'
+#Spoolman has been installed successfully!
+#If you want to connect to an external database, you can edit the .env file and restart the service.
+
+# Stop and disable the old Spoolman service
+#sudo systemctl stop Spoolman
+#sudo systemctl disable Spoolman
+#systemctl --user stop Spoolman
+#systemctl --user disable Spoolman
+
+# Download and install the new version
+#mv Spoolman Spoolman_old && \
+#mkdir -p ./Spoolman && \
+#source_url=$(curl -s https://api.github.com/repos/Donkie/Spoolman/releases/latest | jq -r '.assets[] | select(.name == "spoolman.zip").browser_download_url') && \
+#curl -sSL $source_url -o temp.zip && unzip temp.zip -d ./Spoolman && rm temp.zip && \
+#cp Spoolman_old/.env Spoolman/.env && \
+#cd ./Spoolman && \
+#bash ./scripts/install.sh && \
+#rm -rf ../Spoolman_old
+
+
