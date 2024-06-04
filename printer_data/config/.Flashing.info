@@ -64,3 +64,15 @@ sudo service klipper stop
 make flash
 sudo service klipper start
 //End//
+
+
+######################################################################################################################
+Instructions for how to flash the host MCU
+######################################################################################################################
+Update your beacon_klipper installation using the UI 
+You will need to use ssh and manually run 
+
+//Copy-Paste//
+./update_firmware.py update all 
+ sudo service klipper restart
+//End//
